@@ -3,7 +3,7 @@ from .models import Booking, Table
 from .forms import BookingForm
 from django.contrib import messages
 from django.utils.timezone import now
-
+from .forms import RegisterForm
 
 # What does this view do?
 # If a POST request is submitted, we create a booking.
@@ -46,3 +46,34 @@ def cancel_booking(request, booking_id):
         messages.error(request, "You are not authorized to cancel this booking.")
 
     return redirect('book_table')
+
+def register(request):
+   if request.method == 'POST':
+      form = RegisterForm(request.POST)
+      if form.is_valid():
+         user = form.save()
+         login(request, user) # Log in immediately after registration
+         messages.success(request, "Registration successful! You are now logged in.")
+         return redirect('book_table')
+
+   else:
+      form = RegisterForm()
+   return render(request, 'bookings/register.html', {'form': form})
+
+def login_view(request):
+   if request.method == 'POST':
+      form = AuthenticationForm(data=request.POST)
+      if form.is_valid():
+         user = form.get_user()
+         login(request, user)
+         messages.success(request, "You are now logged in!")
+         return redirect('book_table')
+         
+   else:
+      form = AuthenticationForm()
+   return render(request, 'bookings/login.html', {'form': form})   
+
+def logout_view(request):
+    logout(request)
+    messages.success(request, "You are now logged out!")
+    return redirect('login')
