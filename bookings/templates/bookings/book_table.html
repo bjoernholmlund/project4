@@ -1,0 +1,20 @@
+{% extands "base.html" %}
+
+{% block_content %}
+<h2>Book a table</h2>
+
+{% if messages %}
+    {% for message in messages %}
+        <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+            {{ message }}
+        </p>
+    {% endfor %}
+{% endif %} 
+
+<form method="Post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Book</button>
+</form>
+
+{% endblock %}
