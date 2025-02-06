@@ -30,7 +30,7 @@ def book_table(request):
          return redirect('book_table') # Send back to the booking page or a confirmation page
         
    else:
-       form = bookingForm()
+       form = BookingForm()
 
    return render(request, 'boookings/book_table.html', {'form': form})    
 
@@ -38,6 +38,11 @@ def book_table(request):
 
 def cancel_booking(request, booking_id):
     booking = Booking.objects.get(id=booking_id)
-    booking.delete()
-    messages.success(request, " Your booking has been cancelled.")
+    
+    if request.user == booking.user: # Ensure the correct user cancels
+       booking.delete()
+       messages.success(request, " Your booking has been cancelled.")
+    else:
+        messages.error(request, "You are not authorized to cancel this booking.")
+
     return redirect('book_table')
