@@ -36,3 +36,8 @@ def book_table(request):
 
 
 
+def cancel_booking(request, booking_id):
+    booking = Booking.objects.get(id=booking_id)
+    booking.delete()
+    messages.success(request, " Your booking has been cancelled.")
+    return redirect('book_table')
