@@ -18,3 +18,13 @@
 </form>
 
 {% endblock %}
+
+<h3>My resarvations</h3>
+<ul>
+    {% for booking in user.bookings.all %}
+        <li>
+            {{ booking.table }} - {{ booking.date_time}}
+            <a href="{% url 'cancel_booking' booking.id %}">Cancel</a>
+        </li>
+    {% endfor %}
+</ul>
