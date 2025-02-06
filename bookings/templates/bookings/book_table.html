@@ -5,7 +5,7 @@
 
 {% if messages %}
     {% for message in messages %}
-        <p style="color: {% if message.tags == 'error' %}red{% else %}green{% endif %};">
+        <p class= "{% if message.tags == 'error' %}red{% else %}green{% endif %};">
             {{ message }}
         </p>
     {% endfor %}
@@ -24,7 +24,7 @@
     {% for booking in user.bookings.all %}
         <li>
             {{ booking.table }} - {{ booking.date_time}}
-            <a href="{% url 'cancel_booking' booking.id %}">Cancel</a>
+            <a href="{% url 'cancel_booking' booking.id %}" onclick="return confirm('Are you sure you want to cancel your reservation?')">Cancel</a>
         </li>
     {% endfor %}
 </ul>
