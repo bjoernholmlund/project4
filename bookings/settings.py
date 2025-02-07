@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "restaurant_bookings",
+    "bookings",
 ]
 
 MIDDLEWARE = [
@@ -70,7 +70,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "restaurant_booking.wsgi.application"
+WSGI_APPLICATION = "bookings.wsgi.application"
 
 
 # Database
