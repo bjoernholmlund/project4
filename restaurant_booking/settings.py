@@ -27,7 +27,7 @@ DEBUG = False
 
 ALLOWED_HOSTS =['127.0.0.1',
                 'localed host',
-                'my-booking-table-project.herokuapp.com']
+                'my-booking-table-project-8aa24a46de03.herokuapp.com']
 
 # Application definition
 
