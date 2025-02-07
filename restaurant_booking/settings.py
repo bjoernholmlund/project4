@@ -25,7 +25,9 @@ SECRET_KEY = "django-insecure-92pbymz%*6=!cp-u#03k!0k88-!sk%z#-)$6o3($%v52^u+=%z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['my-booking-table-project-8aa24a46de03.herokuapp.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS =['127.0.0.1',
+                'localed host',
+                'my-booking-table-project.herokuapp.com']
 
 # Application definition
 

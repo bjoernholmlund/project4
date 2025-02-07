@@ -1,1 +1,1 @@
-web: gunicorn my-booking-table-project.wsgi
+web: gunicorn bookings.wsgi
