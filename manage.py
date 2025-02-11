@@ -3,6 +3,10 @@
 import os
 import sys
 
+if os.path.exists("env.py"):
+    import env
+
+print("DB_URL:", os.environ.get("DB_URL"))
 
 def main():
     """Run administrative tasks."""
