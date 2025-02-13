@@ -87,9 +87,21 @@ WSGI_APPLICATION = "restaurant_booking.wsgi.application"
 #   }
 #}
 
+#DATABASES = {
+#    'default': dj_database_url.parse(os.environ.get("DB_URL"))
+#}
+
 DATABASES = {
-    'default': dj_database_url.parse(os.environ.get("DB_URL"))
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'empty_cape_bud_54735',
+        'USER': 'neondb_owner',
+        'PASSWORD': 'npg_qhiCm3l2OkVx',
+        'HOST': 'ep-small-mud-a2o1p2wk.eu-central-1.aws.neon.tech',
+        'PORT': '5432',
+    }
 }
+
 
 #DATABASES = {
 #   'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))
