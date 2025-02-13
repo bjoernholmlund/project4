@@ -1,14 +1,30 @@
 from django.shortcuts import render, redirect
-from .models import Booking, Table
-from .forms import BookingForm
+from .models import Booking
+from .forms import BookingForm, RegisterForm, AuthenticateForm, UserCreationForm
 from django.contrib import messages
 from django.utils.timezone import now
-from .forms import RegisterForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 # What does this view do?
 # If a POST request is submitted, we create a booking.
 # We check if the table is already booked at the selected time.
 # If it is available, the booking is saved, otherwise the user receives an error message.
+
+@login_required
+def profile(request):
+    return render(request, 'bookings/profile.html')
+
+def UserCreationForm(request):
+    if request.method == "POST":
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)  # Logga in användaren direkt efter registrering
+            return redirect('home')  # Eller någon annan sida du vill skicka användaren till
+    else:
+        form = UserCreationForm()
+    return render(request, 'bookings/register.html', {'form': form})
 
 def book_table(request):
    if request.method == 'Post':
@@ -62,7 +78,7 @@ def register(request):
 
 def login_view(request):
    if request.method == 'POST':
-      form = AuthenticationForm(data=request.POST)
+      form = AuthenticateForm(data=request.POST)
       if form.is_valid():
          user = form.get_user()
          login(request, user)
@@ -70,7 +86,7 @@ def login_view(request):
          return redirect('book_table')
          
    else:
-      form = AuthenticationForm()
+      form = AuthenticateForm()
    return render(request, 'bookings/login.html', {'form': form})   
 
 def logout_view(request):
