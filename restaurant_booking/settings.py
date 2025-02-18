@@ -102,6 +102,15 @@ DATABASES = {
     }
 }
 
+OPENING_HOURS = {
+    "monday": ("11:00", "22:00"),
+    "tuesday": ("11:00", "22:00"),
+    "wednesday": ("11:00", "22:00"),
+    "thursday": ("11:00", "22:00"),
+    "friday": ("11:00", "23:00"),
+    "saturday": ("12:00", "23:00"),
+    "sunday": ("12:00", "21:00"),
+}
 
 #DATABASES = {
 #   'default': dj_database_url.parse(os.environ.get("DATABASE_URL"))

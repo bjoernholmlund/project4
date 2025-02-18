@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import book_table, cancel_booking
+from .views import book_table, create_booking, cancel_booking
 
 
 
@@ -10,6 +10,7 @@ urlpatterns = [
     path('logout/', views.logout_view, name='logout'),
     path('profile/', views.profile, name='profile'),
     path('book/', book_table, name='book_table'),
+    path('create_booking/', create_booking, name='create_booking'),
     path('cancel/<int:booking_id>/', cancel_booking, name='cancel_booking'),
 ]
 

@@ -6,36 +6,63 @@
     <title>Book a table</title>
 </head>
 <body>
-    {% extands "base.html" %}
 
-{% block_content %}
-<h2>Book a table</h2>
+    <form method="post">
+        {% csrf_token %}
+        
+        <label for="table">Välj bord:</label>
+        <select id="table" name="table" required>
+            {% for table in tables %}
+                <option value="{{ table.id }}">Bord {{ table.table_number }} ({{ table.capacity }} personer)</option>
+            {% endfor %}
+        </select>
+    
+        <label for="date_time">Välj datum och tid:</label>
+        <input type="datetime-local" id="date_time" name="date_time" required>
+    
+        <label for="number_of_guests">Antal gäster:</label>
+        <input type="number" id="number_of_guests" name="number_of_guests" min="1" required>
+    
+        <button type="submit">Boka</button>
+    </form>
+  
+    {% extends "base.html" %}
 
-{% if messages %}
-    {% for message in messages %}
-        <p class= "{% if message.tags == 'error' %}red{% else %}green{% endif %};">
-            {{ message }}
-        </p>
-    {% endfor %}
-{% endif %} 
+    {% block content %}
+    <h2>Book a table</h2>
+    
+    {% if messages %}
+        {% for message in messages %}
+            <p class="{% if message.tags == 'error' %}red{% else %}green{% endif %};">
+                {{ message }}
+            </p>
+        {% endfor %}
+    {% endif %} 
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Book</button>
+    </form>
+    
+    <h3>My reservations</h3>
+    <ul>
+        {% for booking in user.bookings.all %}
+            <li>
+                {{ booking.table }} - {{ booking.date_time }}
+                <a href="{% url 'cancel_booking' booking.id %}" 
+                   onclick="return confirm('Are you sure you want to cancel your reservation?')">
+                    Cancel
+                </a>
+            </li>
+        {% empty %}
+            <li>No reservations yet.</li>
+        {% endfor %}
+    </ul>
+    
+    {% endblock %}
 
-<form method="Post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Book</button>
-</form>
 
-{% endblock %}
-
-<h3>My resarvations</h3>
-<ul>
-    {% for booking in user.bookings.all %}
-        <li>
-            {{ booking.table }} - {{ booking.date_time}}
-            <a href="{% url 'cancel_booking' booking.id %}" onclick="return confirm('Are you sure you want to cancel your reservation?')">Cancel</a>
-        </li>
-    {% endfor %}
-</ul>
 </body>
 </html>
 

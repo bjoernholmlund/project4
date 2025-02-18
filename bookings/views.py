@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Booking
+from .models import Booking, Table
 from .forms import BookingForm, RegisterForm, AuthenticateForm, UserCreationForm
 from django.contrib import messages
 from django.utils.timezone import now
@@ -14,42 +14,58 @@ from django.contrib.auth.decorators import login_required
 @login_required
 def profile(request):
     return render(request, 'bookings/profile.html')
+def index(request):
+    return render(request, 'bookings/index.html')
 
 def UserCreationForm(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)  # Logga in användaren direkt efter registrering
-            return redirect('home')  # Eller någon annan sida du vill skicka användaren till
+            login(request, user)  # Log in the user immediately after registration.
+            return redirect('home')  # Or any other page you want to send the user to.
     else:
         form = UserCreationForm()
     return render(request, 'bookings/register.html', {'form': form})
 
 def book_table(request):
-   if request.method == 'Post':
-      form = BookingForm(request.Post)
-      if form.is_valid():
-            booking_date = form.cleaned_data['data_time']
+    if request.method == 'POST':  
+        form = BookingForm(request.POST)
+        if form.is_valid():
+            booking_date = form.cleaned_data['date_time']
             table = form.cleaned_data['table']
+            guest_name = form.cleaned_data['guest_name']
+            guest_email = form.cleaned_data['guest_email']
+            
+            # Rundar bokningstid till närmaste minut
+            rounded_booking_date = booking_date.replace(second=0, microsecond=0)
 
+            # Kontrollera om bordet redan är bokat vid exakt denna tid
+            existing_booking = Booking.objects.filter(
+                table=table,
+                date_time=rounded_booking_date,
+                is_cancelled=False  
+            ).exists()
 
-            # Check if the table is available on that date
-      existing_booking = Booking.objects.filter(table=table, date_time=booking_date).exists()
+            if existing_booking:
+                messages.error(request, "The table is already booked at this time. Choose another time or another table.")
+                return render(request, 'bookings/book_table.html', {'form': form})  # Viktigt att returnera här!
 
-      if existing_booking:
-           messages.error(request, "The table is already booked at this time. Choose another time or another table.")        
-        
-      else:
-         form.save()
-         messages.success(request, "Your booking is confirmed!")
-         return redirect('book_table') # Send back to the booking page or a confirmation page
-        
-   else:
-       form = BookingForm()
+            # Om användaren inte är inloggad, se till att namn och e-post är ifyllda
+            if not request.user.is_authenticated:
+                if not guest_name or not guest_email:
+                    messages.error(request, "Please provide both your name and email address if you're not logged in.")
+                    return render(request, 'bookings/book_table.html', {'form': form})
 
-   return render(request, 'boookings/book_table.html', {'form': form})    
+            form.save()
+            messages.success(request, "Your booking is confirmed!")
+            return redirect('book_table') 
 
+    else:
+        form = BookingForm()
+
+    return render(request, 'bookings/book_table.html', {'form': form})
+     
 
 
 def cancel_booking(request, booking_id):
@@ -93,3 +109,15 @@ def logout_view(request):
     logout(request)
     messages.success(request, "You are now logged out!")
     return redirect('login')
+
+
+def create_booking(request):
+    tables = Table.objects.all() # Getting all the tables
+    if request.method == "POST":
+       form = BookingForm(request.POST)
+       if form.is_valid():
+            form.save()
+            return redirect('bookings:book_table')
+       else:
+           form = BookingForm()    
+       return render/request, 'bookings/create_booking.html', {'form': form, 'tables': tables}    

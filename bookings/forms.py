@@ -18,6 +18,9 @@ class BookingForm(forms.ModelForm):
     class Meta:
         model = Booking
         fields = ['user', 'table', 'date_time', 'number_of_guests']
+        widgets = {
+            "date_time": forms.DateTimeInput(attrs={"type": "datetime-local"})
+        }
     
 class RegisterForm(forms.ModelForm):
     class Meta:
