@@ -3,11 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Restaurang Bokning</title>
+
+</head>
+<body>
+    {% extends "bookings/base.html" %}
+
+    {% block content %}
+        <h1>Välkommen till vår restaurang!</h1>
+        <p>Boka ett bord och njut av en fantastisk måltid.</p>
+        <a href="{% url 'book_table' %}" class="btn">Boka nu</a>
+    {% endblock %}
+</body>
+</html>
+
+<!--<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
 <body>
     <header>
-        <!--Navigation-->
+        Navigation
         <nav>
             <ul>
                 <li><a href="#wome"></a></li>
@@ -31,4 +50,4 @@
     </footer>
     
 </body>
-</html>
+</html> 

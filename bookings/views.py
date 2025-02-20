@@ -1,3 +1,4 @@
+import datetime
 from django.shortcuts import render, redirect
 from .models import Booking, Table
 from .forms import BookingForm, RegisterForm, AuthenticateForm, UserCreationForm
@@ -41,25 +42,25 @@ def book_table(request):
             rounded_booking_date = booking_date.replace(second=0, microsecond=0)
 
             # Kontrollera om bordet redan är bokat vid exakt denna tid
-            existing_booking = Booking.objects.filter(
-                table=table,
-                date_time=rounded_booking_date,
-                is_cancelled=False  
+        existing_booking = Booking.objects.filter(
+            table=table,
+            date_time__lt=rounded_booking_date + datetime.timedelta(hours=3),
+            date_time__gt=rounded_booking_date
             ).exists()
 
-            if existing_booking:
+        if existing_booking:
                 messages.error(request, "The table is already booked at this time. Choose another time or another table.")
                 return render(request, 'bookings/book_table.html', {'form': form})  # Viktigt att returnera här!
 
             # Om användaren inte är inloggad, se till att namn och e-post är ifyllda
-            if not request.user.is_authenticated:
+        if not request.user.is_authenticated:
                 if not guest_name or not guest_email:
                     messages.error(request, "Please provide both your name and email address if you're not logged in.")
                     return render(request, 'bookings/book_table.html', {'form': form})
 
-            form.save()
-            messages.success(request, "Your booking is confirmed!")
-            return redirect('book_table') 
+        form.save()
+        messages.success(request, "Your booking is confirmed!")
+        return redirect('book_table') 
 
     else:
         form = BookingForm()

@@ -22,45 +22,31 @@ class Table(models.Model):
 
 
 class Booking(models.Model):
-    status_choices = [
-        ("active", "Active"),
-        ("cancelled", "Cancelled"),
-    ] 
+    TABLE_DURATION = datetime.timedelta(hours=2, minutes=59)  # ⏳ Bokningstid 3h
+
+    table = models.ForeignKey("bookings.Table", on_delete=models.CASCADE, null=False, blank=False)
+    date_time = models.DateTimeField(help_text="Format: YYYY-MM-DD HH:MM")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+
+    guest_name = models.CharField(max_length=100, blank=True, help_text="Name of the person booking (if not logged in)")
+    guest_email = models.EmailField(blank=True, help_text="Email of the person booking (if not logged in)")
+    number_of_guests = models.IntegerField(help_text="Number of guests")
+
+    created_at = models.DateTimeField(default=timezone.now)
+    is_cancelled = models.BooleanField(default=False, help_text="Check if booking is cancelled")
+
     class Meta:
         unique_together = ("table", "date_time")
 
-    def clean(self):
-        overlapping_bookings = Booking.objects.filter(  # Find bookings that overlap with the current booking
-            table=self.table,
-            date_time=self.date_time,
-        ).exclude(id=self.id)  # Exclude the current booking from the queryset
-        print (f'overlapping_bookings: {overlapping_bookings}')
-        if overlapping_bookings.exists():
-            raise ValidationError(f"The table {self.table}is already booked at this {self.date.time}. Choose another time or another table.")
-
-    # Links the booking to a logged in user
-    user = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
-    
-    # If a user is not logged in, these fields can be filled in manually
-    guest_name = models.CharField(
-        max_length=100,
-        blank=True,
-        help_text="Name of the person booking (if not logged in)"
-        )
-    
-    guest_email = models.EmailField(
-        blank=True,
-        help_text="Email of the person booking (if not logged in)"
-        )
-    
-    table = models.ForeignKey(Table, on_delete=models.CASCADE)
-    date_time = models.DateTimeField(help_text="Format: YYYY-MM-DD HH:MM")
-    number_of_guests = models.IntegerField(help_text="Number of guests")
-
-    created_at = models.DateTimeField(default=timezone.now) 
-    is_cancelled = models.BooleanField(default=False, help_text="Check if booking is cancelled")
+    @property
+    def end_time(self):
+        return self.date_time + self.TABLE_DURATION
 
     def clean(self):
+        if not self.table:
+            raise ValidationError("Please select a table.")
+        
+        # Kolla öppettider
         weekday = self.date_time.strftime("%A").lower()
         opening_time, closing_time = settings.OPENING_HOURS.get(weekday, ("00:00", "00:00"))
 
@@ -68,16 +54,25 @@ class Booking(models.Model):
         closing_dt = datetime.datetime.strptime(closing_time, "%H:%M").time()
 
         if not (opening_dt <= self.date_time.time() <= closing_dt):
-            raise ValidationError(f"Bookings are only allowed between {opening_time} and {closing_time} on {weekday.capitalize()}")
+            raise ValidationError(f"Bookings are only allowed between {opening_time} and {closing_time} on {weekday.capitalize()}.")
 
- 
-def __str__(self):
-    if self.user:
-        identifier = self.user.username
-    else:
-        identifier = self.guest_name or "Guest"
-    
-    return f"Booking for {identifier} on {self.date_time.strftime('%Y-%m-%d %H:%M')}"
+        # Kolla om bokningen krockar med en annan
+        overlapping_bookings = Booking.objects.filter(
+            table=self.table,
+            date_time__lt=self.end_time,  # Ny bokning startar innan den gamla slutar
+            date_time__gte=self.date_time - self.TABLE_DURATION  # Ny bokning slutar efter den gamla startar
+        ).exclude(id=self.id)
+
+        if overlapping_bookings.exists():
+            raise ValidationError(f"The table {self.table} is already booked at this time. Choose another time or another table.")
+
+    def __str__(self):
+        if self.user:
+            identifier = self.user.username
+        else:
+            identifier = self.guest_name or "Guest"
+        
+        return f"Booking for {identifier} on {self.date_time.strftime('%Y-%m-%d %H:%M')}"
      
 
 class Menu(models.Model):
