@@ -9,6 +9,7 @@
     <!-- Länka till CSS-filer -->
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  
 </head>
 <body class="bg-gray-100 text-gray-900">
     
@@ -23,12 +24,49 @@
 
     <nav>
         <div class="ham-menu">
-            <span></span>
-            <span></span>
-            <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
         </div>
-    </nav>
 
+        <div class="container">
+            <!-- Knapp för att öppna popup -->
+            <button type="button" class="btn" onclick="openPopup()">Reservation</button>
+        
+            <!-- Popup -->
+            <div class="popup" id="popup">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup()">&times;</span>
+                    <h2>Boka ett bord</h2>
+                    <form action="#" method="POST">
+                        <div class="input-box">
+                            <span class="details">Full Name</span>
+                            <input type="text" placeholder="Enter your name" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Email</span>
+                            <input type="email" placeholder="Enter your email" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Phone</span>
+                            <input type="tel" placeholder="Enter your phone number" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Date</span>
+                            <input type="date" required>
+                        </div>
+                        <div class="input-box">
+                            <span class="details">Time</span>
+                            <input type="time" required>
+                        </div>
+                        <button type="submit" class="submit-btn">Reservate</button>
+                    
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+    </nav>
     <!-- Main Content -->
     <main class="container mx-auto p-6">
         {% block content %}{% endblock %}
@@ -38,6 +76,6 @@
     <footer class="bg-white shadow-md p-4 text-center mt-10">
         <p>&copy; 2025 Restaurant. All rights reserved.</p>
     </footer>
-    
+      <script src="{% static 'js/index.js' %}"></script>
 </body>
 </html>
