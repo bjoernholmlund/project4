@@ -28,3 +28,13 @@ window.onclick = function(event) {
         closePopup();
     }
 };
+
+// Vänta tills sidan har laddats helt
+window.onload = function() {
+    // Sätt en fördröjning innan texten blir synlig
+    setTimeout(function() {
+        // Lägg till 'hidden' klassen som triggar animationen
+        document.getElementById('delayed-text').classList.remove('hidden');
+        document.getElementById('delayed-text').classList.add('visible');
+    }, 1000); // Fördröjningen innan animationen startar
+};

@@ -1,14 +1,122 @@
+html, body{
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+body {
+    background-image: url(../img/restaurant_darkened.png);
+    background-size: 100% auto;
+    background-position: center center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #f8f8f8;
+    font-family: 'Poppins', sans-serif;
+    flex: 1;
+
+}
+header{
+    padding: 50px;
+    text-align: center;
+    background-color: transparent;
+}
+
+.logo-bite{
+   background: url("../img/bite_transparent_v2.png") no-repeat center;
+    width: 200px; /* Justera storleken efter behov */
+    height: 100px; /* Justera efter bildens proportioner */
+    background-size: contain; /* Ser till att bilden anpassas till div:en */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+nav{
+    background-color: transparent;
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding: 20px;
+    z-index: 10;
+}
+
+nav a{
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+nav a:hover{
+    text-decoration: underline;
+}
+main{
+    flex: 1;
+}
+
+footer{
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+    width: 100%;
+}
+
+h1{
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+h1, h2, h3 {
+    font-family: 'Playfair Display', serif;
+    color: white;
+}
+
+.center-text{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Justera för att exakt centrera */
+    z-index: -1;
+}
+.center-text h1{
+    font-size: 3rem;
+}
+
+.center-text p{
+    font-size: 1.5rem;
+    color: white;
+}
+
+.hidden{
+    opacity: 0;
+    transition: opacity 3s ease-in-out;
+}
+
+.visible{
+    opacity: 1;
+    transition: opacity 3s ease-in-out;
+}
 
 /*HAMBURGER-MENU!*/
 /* off-screen-menu*/
 .off-screen-menu {
-    background-color: aliceblue;
+    background-color: #1a1a1a;
+    color: #f8f8f8;
     height: 100vh;
     width: 100%;
-    max-width: 350px;
+    max-width: 250px;
     position: fixed;
     top: 0;
-    left: -350px;
+    left: -250px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -26,12 +134,11 @@
 nav{
     padding: 1rem;
     display: flex;
-    background-color: red
 }
 
 .ham-menu{
-    height: 50px;
-    width: 50px;
+    height: 30px;
+    width: 30px;
     margin-right: auto;
     position: relative;
 }
@@ -40,12 +147,13 @@ nav{
     height: 5px;
     width: 100%;
     background-color: rgb(255, 255, 255);
-    border-radius: 25px;
+    border-radius: 25px; 
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     transition: .3s ease;
+
 }
 
 .ham-menu span:nth-child(1){
@@ -80,10 +188,19 @@ nav{
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); /* Mörklägger bakgrunden */
+    background-color: rgba(0, 0, 0, 0.8); /* Mörklägger bakgrunden */
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2); /* Lägger till en liten skugga, bakom formulär! */
+}
+
+.container{
+    display: flex;
+    justify-content: flex-end; /* Flyttar knappen till höger */
+    padding: 20px; /* Lägg till lite padding om det behövs */
+    background-color: transparent;
 }
 
 /* Innehåll för popup */
@@ -121,13 +238,38 @@ nav{
 
 /* Knappstil */
 .btn, .submit-btn {
-    background: black;
+    background: transparent;
     color: white;
     padding: 10px 15px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
     transition: 0.3s;
+    font-size: 10px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    border: white;
+    border-bottom-color:(255, 255, 255);
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    border-bottom-style: solid;
+    border-bottom-width: 1px;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-image-slice: 100%;
+    border-image-source: none;
+    border-image-width: 1;
+    border-left-color: (255, 255, 255);  
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-right-color: (255, 255, 255);
+    border-right-style: solid;
+    border-right-width: 1px;
+    border-top-color: (255, 255, 255);
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+    border-top-style: solid;
+    border-top-width: 1px;
 }
 
 .btn:hover, .submit-btn:hover {
