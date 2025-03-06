@@ -17,7 +17,8 @@ def profile(request):
     return render(request, 'bookings/profile.html')
 def index(request):
     return render(request, 'bookings/index.html')
-
+def base_view(request):
+    return render(request, 'bookings/base.html')
 def UserCreationForm(request):
     if request.method == "POST":
         form = UserCreationForm(request.POST)

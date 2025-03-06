@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    {% extends "bookings/base.html" %}
+
+    {% block content %}
+    <section id="menu-section" class="menu-section">
+        <h2>Our Menu</h2>
+        <div class="menu-images">
+            <img src="/path/to/image1.jpg" alt="Dish 1" class="menu-image">
+            <img src="/path/to/image2.jpg" alt="Dish 2" class="menu-image">
+            <img src="/path/to/image3.jpg" alt="Dish 3" class="menu-image">
+        </div>
+        <div class="menu-details">
+            <h3>Dish 1 Name</h3>
+            <p>Description of dish 1. Lorem ipsum dolor sit amet.</p>
+            <h3>Dish 2 Name</h3>
+            <p>Description of dish 2. Lorem ipsum dolor sit amet.</p>
+            <h3>Dish 3 Name</h3>
+            <p>Description of dish 3. Lorem ipsum dolor sit amet.</p>
+        </div>
+    </section>
+    {% endblock %}
+</body>
+</html>

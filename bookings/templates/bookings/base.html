@@ -12,16 +12,17 @@
   
 </head>
 <body class="bg-gray-100 text-gray-900">
-     
+  
 
     <div class="off-screen-menu">
         <ul>
             <li><a href="#home">Home</a></li>
             <li><a href="#menu">Menu</a></li>
-            <li><a href="#booking">Reservation</a></li>
+            <li><a href="#reservation">Reservation</a></li>
             <li><a href="#contact">Contact</a></li>
         </ul>
     </div>
+
     <!-- Header -->
     <header>
      
@@ -31,7 +32,7 @@
                 <span></span>
                 <span></span>
         </div>
-        <div class="logo-bite"></div>  
+        <a href="{% url 'base' %}" class="logo-bite"></a>  
         <div class="container">
             <!-- Knapp för att öppna popup -->
             <button type="button" class="btn" onclick="openPopup()">RESERVATION</button>
@@ -71,10 +72,12 @@
         
     </nav>
     </header>
+
     
-    <!--MAIN CONTENT-->
+    <!--MAIN CONTENT--> 
     <main class="container mx-auto p-6">
-        {% block content %}{% endblock %}
+        {% block content %}{% endblock %} 
+
     </main>
     <!-- Footer -->
     <footer>

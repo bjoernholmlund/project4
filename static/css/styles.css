@@ -1,29 +1,35 @@
 html, body{
     height: 100%;
     margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
 }
 
-body {
+html {
+    scroll-behavior: smooth;
+}
+
+body{
     background-image: url(../img/restaurant_darkened.png);
-    background-size: 100% auto;
+    background-size: cover;
     background-position: center center;
-    background-attachment: fixed;
+    background-attachment: scroll;  /* Använd 'scroll' istället för 'fixed' på små skärmar */
     background-repeat: no-repeat;
     color: #f8f8f8;
     font-family: 'Poppins', sans-serif;
     flex: 1;
-
 }
+
 header{
+    position: relative;
     padding: 50px;
     text-align: center;
     background-color: transparent;
 }
 
 .logo-bite{
-   background: url("../img/bite_transparent_v2.png") no-repeat center;
+   background: url(../img/bite_transparent_v2.png) no-repeat center;
     width: 200px; /* Justera storleken efter behov */
     height: 100px; /* Justera efter bildens proportioner */
     background-size: contain; /* Ser till att bilden anpassas till div:en */
@@ -43,11 +49,14 @@ nav{
     width: 100%;
     top: 0;
     left: 0;
-    padding: 20px;
     z-index: 10;
+    padding: 20px;
+    /*padding: 1rem;
+    display: flex;*/
 }
 
 nav a{
+    
     color: white;
     text-decoration: none;
     margin: 0 10px;
@@ -56,6 +65,7 @@ nav a{
 nav a:hover{
     text-decoration: underline;
 }
+
 main{
     flex: 1;
 }
@@ -72,7 +82,7 @@ h1{
     text-align: center;
     justify-content: center;
     align-items: center;
-    color: white;
+    color: white;;
 }
 
 h1, h2, h3 {
@@ -106,6 +116,7 @@ h1, h2, h3 {
     transition: opacity 3s ease-in-out;
 }
 
+
 /*HAMBURGER-MENU!*/
 /* off-screen-menu*/
 .off-screen-menu {
@@ -124,7 +135,7 @@ h1, h2, h3 {
     text-align: center;
     font-size: 1rem;
     transition: .3s ease;
-    padding-top: 80px;
+    padding-top: 100px;
 }
 
 .off-screen-menu.active{
@@ -134,13 +145,14 @@ h1, h2, h3 {
 nav{
     padding: 1rem;
     display: flex;
-}
+}    
 
 .ham-menu{
     height: 30px;
     width: 30px;
     margin-right: auto;
     position: relative;
+    cursor: pointer;
 }
 
 .ham-menu span{
@@ -153,7 +165,7 @@ nav{
     left: 50%;
     transform: translate(-50%, -50%);
     transition: .3s ease;
-
+    
 }
 
 .ham-menu span:nth-child(1){
@@ -175,6 +187,7 @@ nav{
     top: 50%;
     transform: rotate(-45deg);
 }
+
 
 /*-----------------------------------*/
 
@@ -237,7 +250,7 @@ nav{
 }
 
 /* Knappstil */
-.btn, .submit-btn {
+.btn{
     background: transparent;
     color: white;
     padding: 10px 15px;
@@ -272,7 +285,57 @@ nav{
     border-top-width: 1px;
 }
 
-.btn:hover, .submit-btn:hover {
+
+
+/*.btn:hover, .submit-btn:hover {
     background: #444;
-}
+}*/
 /*-----------------------------------*/
+
+@media (max-width: 768px) {
+    /* Gör att header och innehåll passar på mobilen */
+    header {
+        padding: 30px;
+    }
+
+    .logo-bite {
+        width: 150px;
+        height: 75px;
+    }
+
+    nav {
+        flex-direction: column;  /* Länkarna staplas vertikalt på mindre skärmar */
+        padding: 10px;
+    }
+
+    nav a {
+        margin: 10px 0;  /* Öka marginalen för att få mer utrymme mellan länkar */
+    }
+    
+    .btn {
+        display: none; /* Döljer knappen på skärmar som är 768px eller mindre */
+    }
+}
+
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px; /* Minska textstorleken på riktigt små enheter */
+    }
+
+    .center-text h1 {
+        font-size: 1.5rem;  /* Minska storleken på texten */
+    }
+
+    .center-text p {
+        font-size: 1rem;  /* Minska storleken på texten */
+    }
+
+    .home h1 {
+        font-size: 2rem;
+    }
+
+    .home p {
+        font-size: 1.2rem;
+    }
+}
