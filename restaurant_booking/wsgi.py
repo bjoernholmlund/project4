@@ -8,11 +8,14 @@ https://docs.djangoproject.com/en/4.2/howto/deployment/wsgi/
 """
 
 import os 
-import env
-if os.path.exists("env.py"):
-   import env # Laddar in miljövariabler
-
+from dotenv import load_dotenv
 from django.core.wsgi import get_wsgi_application
+
+#if os.path.exists("env.py"):
+#   import env # Laddar in miljövariabler
+
+if os.path.exists(".env"):
+    load_dotenv()
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "restaurant_booking.settings")
 
