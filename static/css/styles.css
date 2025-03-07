@@ -156,7 +156,7 @@ nav{
 }
 
 .ham-menu span{
-    height: 5px;
+    height: 3px;
     width: 100%;
     background-color: rgb(255, 255, 255);
     border-radius: 25px; 
@@ -165,7 +165,6 @@ nav{
     left: 50%;
     transform: translate(-50%, -50%);
     transition: .3s ease;
-    
 }
 
 .ham-menu span:nth-child(1){
@@ -217,8 +216,9 @@ nav{
 }
 
 /* Innehåll för popup */
-.popup-content {
+.popup-content{
     background: white;
+    color: black;
     padding: 20px;
     width: 80%;
     max-width: 400px;
@@ -227,13 +227,18 @@ nav{
     text-align: center;
 }
 
+.popup-content h2 {
+    color: black;
+}
+
 /* Stängningsknapp */
 .close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 50px;
+    right: 450px;
     font-size: 24px;
     cursor: pointer;
+    color: black;
 }
 
 /* Inputfält */
@@ -286,7 +291,7 @@ nav{
 }
 
 
-
+/* MAYBE TAKING THIS BACK */
 /*.btn:hover, .submit-btn:hover {
     background: #444;
 }*/

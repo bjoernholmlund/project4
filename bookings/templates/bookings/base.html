@@ -34,6 +34,7 @@
         </div>
         <a href="{% url 'base' %}" class="logo-bite"></a>  
         <div class="container">
+           
             <!-- Knapp för att öppna popup -->
             <button type="button" class="btn" onclick="openPopup()">RESERVATION</button>
             <!-- Popup -->
@@ -74,7 +75,12 @@
     
     <!--MAIN CONTENT--> 
     <main class="container mx-auto p-6">
-        {% block content %}{% endblock %} 
+        {% block content %}
+        <div class="center-text">
+            <div class="big-text"><h1 id="delayed-text" class="hidden">Welcome to Bite</h1></div>
+        </div>
+        
+        {% endblock %} 
 
     </main>
     <!-- Footer -->
