@@ -7,62 +7,46 @@
 </head>
 <body>
 
-    <form method="post">
-        {% csrf_token %}
-        
-        <label for="table">Välj bord:</label>
-        <select id="table" name="table" required>
-            {% for table in tables %}
-                <option value="{{ table.id }}">Bord {{ table.table_number }} ({{ table.capacity }} personer)</option>
-            {% endfor %}
-        </select>
-    
-        <label for="date_time">Välj datum och tid:</label>
-        <input type="datetime-local" id="date_time" name="date_time" required>
-    
-        <label for="number_of_guests">Antal gäster:</label>
-        <input type="number" id="number_of_guests" name="number_of_guests" min="1" required>
-    
-        <button type="submit">Boka</button>
+    <!-- Formulär för att boka bord -->
+    <h2>Book a Table</h2>
+    <form method="POST" action="{% url 'book_table' %}">
+        {% csrf_token %} <!-- Viktigt att inkludera CSRF-token i formuläret -->
+        <div class="input-box">
+            <label for="guest_name">Full Name:</label>
+            <input type="text" name="guest_name" id="guest_name" required>
+        </div>
+        <div class="input-box">
+            <label for="guest_email">Email:</label>
+            <input type="email" name="guest_email" id="guest_email" required>
+        </div>
+        <div class="input-box">
+            <label for="phone">Phone Number:</label>
+            <input type="tel" name="phone" id="phone" required>
+        </div>
+        <div class="input-box">
+            <label for="date_time">Date and Time:</label>
+            <input type="datetime-local" name="date_time" id="date_time" required>
+        </div>
+        <div class="input-box">
+            <label for="table">Choose a table:</label>
+            <select name="table" id="table" required>
+                <option value="1">Table 1</option>
+                <option value="2">Table 2</option>
+                <option value="3">Table 3</option>
+                <option value="4">Table 4</option>
+            </select>
+        </div>
+        <button type="submit">Book Now</button>
     </form>
-  
-    {% extends "base.html" %}
 
-    {% block content %}
-    <h2>Book a table</h2>
-    
+    <!-- Visar eventuella meddelanden -->
     {% if messages %}
-        {% for message in messages %}
-            <p class="{% if message.tags == 'error' %}red{% else %}green{% endif %};">
-                {{ message }}
-            </p>
-        {% endfor %}
-    {% endif %} 
-    
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Book</button>
-    </form>
-    
-    <h3>My reservations</h3>
-    <ul>
-        {% for booking in user.bookings.all %}
-            <li>
-                {{ booking.table }} - {{ booking.date_time }}
-                <a href="{% url 'cancel_booking' booking.id %}" 
-                   onclick="return confirm('Are you sure you want to cancel your reservation?')">
-                    Cancel
-                </a>
-            </li>
-        {% empty %}
-            <li>No reservations yet.</li>
-        {% endfor %}
-    </ul>
-    
-    {% endblock %}
-
-
+        <ul>
+            {% for message in messages %}
+                <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 </body>
 </html>
 

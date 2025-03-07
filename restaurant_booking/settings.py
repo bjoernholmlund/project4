@@ -75,7 +75,9 @@ WSGI_APPLICATION = "restaurant_booking.wsgi.application"
 
 
 
-
+DATABASES = {
+    'default': dj_database_url.config(conn_max_age=600, ssl_require=True)
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -91,16 +93,16 @@ WSGI_APPLICATION = "restaurant_booking.wsgi.application"
 #    'default': dj_database_url.parse(os.environ.get("DB_URL"))
 #}
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'empty_cape_bud_54735',
-        'USER': 'neondb_owner',
-        'PASSWORD': 'npg_qhiCm3l2OkVx',
-        'HOST': 'ep-small-mud-a2o1p2wk.eu-central-1.aws.neon.tech',
-        'PORT': '5432',
-    }
-}
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.postgresql',
+#        'NAME': 'empty_cape_bud_54735',
+#        'USER': 'neondb_owner',
+#        'PASSWORD': 'npg_qhiCm3l2OkVx',
+#        'HOST': 'ep-small-mud-a2o1p2wk.eu-central-1.aws.neon.tech',
+#        'PORT': '5432',
+#    }
+#}
 
 OPENING_HOURS = {
     "monday": ("11:00", "22:00"),
